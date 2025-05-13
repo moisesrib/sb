@@ -25,6 +25,10 @@ public class ProductService {
         product.setName(data.name());
         product.setDescription(data.description());
         product.setPrice(data.price());
+        product.setPromotional(data.promotional());
+        product.setCost(data.cost());
+        product.setStock(data.stock());
+        product.setActive(data.active());
 
         return productRepository.save(product);
     }

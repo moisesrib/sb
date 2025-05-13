@@ -1,153 +1,149 @@
 <script setup lang="ts">
-import { AutoForm, AutoFormField } from '@/components/ui/auto-form'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { Button } from '@/components/ui/button'
-import { toast } from 'vue-sonner'
-import { h } from 'vue'
-import * as z from 'zod'
+import { Textarea } from '@/components/ui/textarea'
+import { BadgeDollarSign, BadgeInfo, Loader2 } from 'lucide-vue-next'
+import { ref } from 'vue';
 
-enum Sports {
-  Football = 'Football/Soccer',
-  Basketball = 'Basketball',
-  Baseball = 'Baseball',
-  Hockey = 'Hockey (Ice)',
-  None = 'I don\'t like sports',
-}
 
-const schema = z.object({
-  username: z
-    .string({
-      required_error: 'Username is required.',
-    })
-    .min(2, {
-      message: 'Username must be at least 2 characters.',
-    }),
 
-  password: z
-    .string({
-      required_error: 'Password is required.',
-    })
-    .min(8, {
-      message: 'Password must be at least 8 characters.',
-    }),
+const loading = ref(false);
 
-  favouriteNumber: z.coerce
-    .number({
-      invalid_type_error: 'Favourite number must be a number.',
-    })
-    .min(1, {
-      message: 'Favourite number must be at least 1.',
-    })
-    .max(10, {
-      message: 'Favourite number must be at most 10.',
-    })
-    .default(1)
-    .optional(),
 
-  acceptTerms: z
-    .boolean()
-    .refine(value => value, {
-      message: 'You must accept the terms and conditions.',
-      path: ['acceptTerms'],
-    }),
+const create =  async () => {
+  loading.value = true;
 
-  sendMeMails: z.boolean().optional(),
-
-  birthday: z.coerce.date().optional(),
-
-  color: z.enum(['red', 'green', 'blue']).optional(),
-
-  marshmallows: z
-    .enum(['not many', 'a few', 'a lot', 'too many']),
-
-  sports: z.nativeEnum(Sports).describe('What is your favourite sport?'),
-
-  bio: z
-    .string()
-    .min(10, {
-      message: 'Bio must be at least 10 characters.',
-    })
-    .max(160, {
-      message: 'Bio must not be longer than 30 characters.',
-    })
-    .optional(),
-
-  customParent: z.string().optional(),
-
-  file: z.string().optional(),
-})
-
-function onSubmit(values: Record<string, any>) {
-  toast({
-    title: 'You submitted the following values:',
-    description: h('pre', { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' }, h('code', { class: 'text-white' }, JSON.stringify(values, null, 2))),
-  })
+  const response = await createProduct({
+    name: 'teste',
+    description: 'teste',
+    price: 10,
+    promotional: 10,
+    cost: 10,
+  });
+ 
 }
 
 </script>
 
-<template>
-  <main class="flex justify-center w-full h-full m-6">
-    <AutoForm class="w-2/3 space-y-6" :schema="schema" :field-config="{
-      password: {
-        label: 'Your sss password',
-        inputProps: {
-          type: 'password',
-          placeholder: '••••••••',
-        },
-      },
-      favouriteNumber: {
-        description: 'Your favourite number between 1 and 10.',
-      },
-      acceptTerms: {
-        label: 'Accept terms and conditions.',
-        inputProps: {
-          required: true,
-        },
-      },
+<template class="bg-[#f6f6f6]">
+  <main class="flex flex-col items-center gap-6 justify-center m-6">
 
-      birthday: {
-        description: 'We need your birthday to send you a gift.',
-      },
+    <Card class="w-[750px]">
+      <CardHeader>
+        <CardTitle class="text-2xl">Nome e Descrição</CardTitle>
+        <CardDescription>Nome e Descrição do produto</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div class="grid w-full gap-6">
+          <div class="grid w-full gap-1.5">
+            <Label for="name">Nome</Label>
+            <Input class="border-primary" id="name" type="name" placeholder="Nome" />
 
-      sendMeMails: {
-        component: 'switch',
-      },
+          </div>
+          <div class="grid w-full gap-1.5">
+            <Label for="description">Descrição</Label>
+            <Textarea class="border-primary" id="description" placeholder="Descrição do produto" />
+            <p class="text-sm text-muted-foreground">
+              Descrição do produto
+            </p>
+          </div>
 
-      bio: {
-        component: 'textarea',
-      },
-
-      marshmallows: {
-        label: 'How many marshmallows fit in your mouth?',
-        component: 'radio',
-      },
-
-      file: {
-        label: 'Text file',
-        component: 'file',
-      },
-    }" @submit="onSubmit">
-      <template #acceptTerms="slotProps">
-        <AutoFormField v-bind="slotProps" />
-        <div class="!mt-2 text-sm">
-          I agree to the <button class="text-primary underline">
-            terms and conditions
-          </button>.
         </div>
-      </template>
+      </CardContent>
+    </Card>
 
-      <template #customParent="slotProps">
-        <div class="flex items-end space-x-2">
-          <AutoFormField v-bind="slotProps" class="w-full" />
-          <Button type="button">
-            Check
-          </Button>
+    <Card class="w-[750px]">
+      <CardHeader>
+        <CardTitle class="text-2xl">Preços</CardTitle>
+        <CardDescription>Preço e preço de promoção e de custo do produto</CardDescription>
+      </CardHeader>
+      <CardContent>
+
+        <div class="grid w-full gap-6">
+          <div class="flex flex-row gap-4">
+            <div class="flex flex-col gap-2 w-full">
+              <Label for="price-in" class="text-muted-foreground">
+                Preço de venda
+              </Label>
+              <div class="relative items-center">
+                <Input id="price-in" type="number" placeholder="0.00" class="pl-10 border-primary" />
+                <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
+                  <BadgeDollarSign class="size-6 text-muted-foreground" />
+                </span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2 w-full">
+              <Label for="price-in" class="text-muted-foreground">
+                Preço promocional
+              </Label>
+              <div class="relative items-center">
+                <Input id="price-in" type="number" placeholder="0.00" class="pl-10 border-primary" />
+                <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
+                  <BadgeDollarSign class="size-6 text-muted-foreground" />
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-row gap-4">
+            <div class="flex flex-col gap-2 w-full">
+              <Label for="price-in" class="text-muted-foreground">
+                Custo
+              </Label>
+              <div class="relative items-center">
+                <Input id="price-in" type="number" placeholder="0.00" class="pl-10 border-primary" />
+                <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
+                  <BadgeDollarSign class="size-6 text-muted-foreground" />
+                </span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2 w-full">
+              <div class="flex flex-row gap-1 m-0 p-0">
+                <Label for="price-in" class="text-muted-foreground">
+                  Margin de lucro
+                </Label>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger as-child>
+                      <BadgeInfo class="size-3 text-muted-foreground text-black" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>A margem é calculada sobre o preço promocional</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+
+              <div class="items-center">
+                <Input disabled id="price-in" type="number" placeholder="0%" class="border-primary" />
+              </div>
+            </div>
+          </div>
+          <Label for="description-client" class="text-muted-foreground">É para uso interno, os seus clientes não o verão
+            na loja.</Label>
         </div>
-      </template>
+      </CardContent>
+    </Card>
+    <Card class="w-[750px]">
+      <CardHeader>
+        <CardTitle class="text-2xl">Estoque</CardTitle>
+        <CardDescription>Estoque do produto</CardDescription>
+      </CardHeader>
+      <CardContent>
 
-      <Button type="submit">
-        Submit
-      </Button>
-    </AutoForm>
+        <div class="grid w-full gap-6">
+          <div class="grid w-full gap-1.5">
+            <Label for="name">Estoque</Label>
+            <Input class="border-primary" id="stock" type="number" placeholder="0" />
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+    <Button class="w-[750px] cursor-pointer" :disabled="loading" @click="create">
+      <Loader2 v-if="loading" class="size-4 animate-spin" />
+      Criar produto
+    </Button>
   </main>
 </template>

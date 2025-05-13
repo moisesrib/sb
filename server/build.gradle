@@ -33,6 +33,9 @@ dependencies {
 
     // Testes
     testImplementation 'io.quarkus:quarkus-junit5'
+
+    compileOnly("org.projectlombok:lombok:1.18.36")
+    annotationProcessor("org.projectlombok:lombok:1.18.36")
 }
 
 group 'org.sb'

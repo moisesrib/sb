@@ -5,7 +5,11 @@ import org.sb.core.structures.BaseEntity;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "products")
 public class Product extends BaseEntity {
@@ -23,37 +27,21 @@ public class Product extends BaseEntity {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal price = BigDecimal.ZERO;
 
-    // Getters and Setters
+    @Column(precision = 10, scale = 2)
+    private BigDecimal promotional = BigDecimal.ZERO;
+
+    @Column(precision = 10, scale = 2)
+    private BigDecimal cost = BigDecimal.ZERO;
+
+    @Column(nullable = false)
+    private Integer stock;
+
+    @Column(nullable = false)
+    private boolean active = true;
+   
     @Override
     public UUID getId() {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
 }
