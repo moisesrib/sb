@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sb.user.dtos.AuthResponseDTO;
-import com.sb.user.dtos.CreateRequestDTO;
-import com.sb.user.dtos.LoginRequestDTO;
+import com.sb.user.dto.AuthResponseDTO;
+import com.sb.user.dto.CreateRequestDTO;
+import com.sb.user.dto.LoginRequestDTO;
 import com.sb.user.service.UserService;
+
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -22,13 +24,13 @@ public class AuthController {
     private UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginRequestDTO data) {
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody @Valid LoginRequestDTO data) {
         AuthResponseDTO user = this.userService.login(data);
         return ResponseEntity.ok(user);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<AuthResponseDTO> create(@RequestBody CreateRequestDTO data) {
+    public ResponseEntity<AuthResponseDTO> create(@RequestBody @Valid CreateRequestDTO data) {
         AuthResponseDTO user = this.userService.create(data);
         return ResponseEntity.ok(user);
     }

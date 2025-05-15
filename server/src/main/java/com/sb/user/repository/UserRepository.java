@@ -3,8 +3,9 @@ package com.sb.user.repository;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.sb.user.model.User;
+
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.sb.domain.user.User;
 
 public interface UserRepository extends JpaRepository<User, UUID> {
 

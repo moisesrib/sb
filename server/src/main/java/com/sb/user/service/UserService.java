@@ -2,17 +2,16 @@ package com.sb.user.service;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.sb.core.exceptions.EmailAlreadyExistsException;
 import com.sb.core.exceptions.NotFoundException;
-import com.sb.domain.user.User;
 import com.sb.infra.security.TokenService;
-import com.sb.user.dtos.AuthResponseDTO;
-import com.sb.user.dtos.CreateRequestDTO;
-import com.sb.user.dtos.LoginRequestDTO;
+import com.sb.user.dto.AuthResponseDTO;
+import com.sb.user.dto.CreateRequestDTO;
+import com.sb.user.dto.LoginRequestDTO;
+import com.sb.user.model.User;
 import com.sb.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;

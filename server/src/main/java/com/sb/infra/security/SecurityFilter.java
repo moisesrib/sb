@@ -1,6 +1,6 @@
 package com.sb.infra.security;
 
-    import java.io.IOException;
+import java.io.IOException;
 import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.sb.domain.user.User;
+import com.sb.user.model.User;
 import com.sb.user.repository.UserRepository;
 
 import jakarta.servlet.FilterChain;

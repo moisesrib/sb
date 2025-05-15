@@ -1,4 +1,4 @@
-package com.sb.domain.user;
+package com.sb.user.model;
 
 import java.util.UUID;
 
