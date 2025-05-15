@@ -12,16 +12,10 @@ import {
 } from '@/components/ui/sidebar'
 
 import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
   Frame,
-  GalleryVerticalEnd,
   Map,
   PieChart,
   Settings2,
-  SquareTerminal
 } from 'lucide-vue-next'
 
 const props = withDefaults(defineProps<SidebarProps>(), {
@@ -36,26 +30,6 @@ const data = {
     avatar: '/avatars/shadcn.jpg',
   },
   navMain: [
-    {
-      title: 'Playground',
-      url: '#',
-      icon: SquareTerminal,
-      isActive: true,
-      items: [
-        {
-          title: 'Home',
-          url: '/',
-        },
-        {
-          title: 'About',
-          url: '/about',
-        },
-        {
-          title: 'Settings',
-          url: '#',
-        },
-      ],
-    },
     {
       title: 'Protudo',
       url: '#',

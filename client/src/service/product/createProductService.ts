@@ -1,4 +1,4 @@
-import apiClient from "../apiClient";
+import api from "../api";
 
 
 interface CreateProductDTO {
@@ -12,7 +12,7 @@ interface CreateProductDTO {
 }
 
 export const createProduct = async (data: CreateProductDTO) => {
-  const response = await apiClient.post('/products', data);
+  const response = await api.post('/products', data);
   return response.data;
 };
 

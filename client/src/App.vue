@@ -1,7 +1,7 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { Toaster } from '@/components/ui/sonner'
 </script>
 <template>
     <RouterView />
-     <Toaster />
+    <Toaster />
 </template>

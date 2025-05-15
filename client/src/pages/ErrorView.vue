@@ -1,3 +1,4 @@
 <template>
-  <h1>404 BRO</h1>
+  <h1>404</h1>
+  <p>Página não encontrada</p>
 </template>
