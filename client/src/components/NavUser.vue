@@ -20,13 +20,11 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
+import { router } from '@/router';
 import {
-  BadgeCheck,
   Bell,
   ChevronsUpDown,
-  CreditCard,
   LogOut,
-  Sparkles,
 } from 'lucide-vue-next'
 
 const props = defineProps<{
@@ -37,7 +35,18 @@ const props = defineProps<{
   }
 }>()
 
+const userData = localStorage.getItem('user');
+const user = JSON.parse(userData || '{}');
+
+props.user.email = user.email;
+props.user.name = user.name;
+
 const { isMobile } = useSidebar()
+
+const handleLogout = () => {
+  localStorage.removeItem('user');
+  router.push('/login');
+}
 </script>
 
 <template>
@@ -84,28 +93,21 @@ const { isMobile } = useSidebar()
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <Sparkles />
-              Upgrade to Pro
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuItem>
+            <!-- <DropdownMenuItem>
               <BadgeCheck />
               Account
             </DropdownMenuItem>
             <DropdownMenuItem>
               <CreditCard />
               Billing
-            </DropdownMenuItem>
+            </DropdownMenuItem> -->
             <DropdownMenuItem>
               <Bell />
               Notifications
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem @click="handleLogout">  
             <LogOut />
             Log out
           </DropdownMenuItem>

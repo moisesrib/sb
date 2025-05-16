@@ -6,6 +6,8 @@ import { ref } from 'vue';
 import { z } from 'zod';
 import { toastError, toastInfo, toastSuccess } from '@/utils/toastUtils'
 import { EyeIcon, EyeOffIcon, Loader2 } from 'lucide-vue-next'
+import { login } from '@/service/account/auth/authService';
+import { router } from '@/router';
 
 const loading = ref(false);
 const email = ref('');
@@ -64,15 +66,14 @@ const handleLogin = async () => {
         toastInfo('Preencha todos os campos corretamente');
         return;
     }
-
     loading.value = true;
     try {
-        // Simulando uma chamada de API
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        const response = await login({ email: email.value, password: password.value });
 
-        // Aqui você implementaria a chamada real de login
-        // const response = await login(email.value, password.value);
+        const user = response.data;
+        localStorage.setItem('user', JSON.stringify(user));
 
+        router.push('/');      
         toastSuccess('Login realizado com sucesso');
     } catch (error) {
         toastError('Falha ao realizar login');
@@ -84,12 +85,12 @@ const handleLogin = async () => {
 </script>
 
 <template>
-    <div class="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
-        <div class="hidden bg-muted lg:block">
-            <img src="https://www.shadcn-vue.com/placeholder.svg" alt="Image" width="1920" height="1080"
+    <div class="w-full h-screen overflow-hidden flex flex-col lg:grid lg:grid-cols-2">
+        <div class="hidden bg-muted lg:block h-full">
+            <img src="../../../public/login.png" alt="Image" width="1920" height="1080"
                 class="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale">
         </div>
-        <div class="flex items-center justify-center py-12">
+        <div class="h-full flex items-center justify-center p-4 lg:p-12 overflow-y-auto">
             <div class="mx-auto grid w-[350px] gap-6">
                 <div class="grid gap-2 text-center">
                     <h1 class="text-3xl font-bold">

@@ -120,6 +120,9 @@ const create = async () => {
 
   loading.value = true;
   try {
+    const user = localStorage.getItem('user');
+    const token = JSON.parse(user || '{}').token;
+    
     const response = await createProduct({
       name: name.value,
       description: description.value,
@@ -128,7 +131,7 @@ const create = async () => {
       cost: Number(cost.value) || 0,
       stock: Number(stock.value) || 0,
       active: true,
-    });
+    }, token || '');
     
     if (response.status === 400) {
       toastError('Erro ao criar produto');

@@ -11,8 +11,12 @@ interface CreateProductDTO {
     active: boolean;
 }
 
-export const createProduct = async (data: CreateProductDTO) => {
-  const response = await api.post('/products', data);
+export const createProduct = async (data: CreateProductDTO, token: string) => {
+  const response = await api.post('/products', data, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
   return response.data;
 };
 
