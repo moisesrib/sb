@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/sb
-    driverClassName: org.postgresql.Driver
-    username: sb
-    password: 1
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/sb}
+    driver-class-name: org.postgresql.Driver
+    username: ${SPRING_DATASOURCE_USERNAME:sb}
+    password: ${SPRING_DATASOURCE_PASSWORD:1}
 
   jpa:
     hibernate:
@@ -13,6 +13,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true  
+
 api:
   security:
     token:  
@@ -22,5 +23,3 @@ logging:
   level:
     org.springframework.web: DEBUG
     org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
-
-
