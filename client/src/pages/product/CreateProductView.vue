@@ -166,9 +166,8 @@ const resetForm = () => {
 </script>
 
 <template class="bg-[#f6f6f6]">
-  <main class="flex flex-col items-center gap-6 justify-center">
-
-    <Card class="w-[750px]">
+  <main class="flex flex-col items-center gap-6 justify-center px-4 py-6">
+    <Card class="w-full max-w-3xl">
       <CardHeader>
         <CardTitle class="text-2xl">Nome e Descrição</CardTitle>
         <CardDescription>Nome e Descrição do produto</CardDescription>
@@ -192,18 +191,16 @@ const resetForm = () => {
       </CardContent>
     </Card>
 
-    <Card class="w-[750px]">
+    <Card class="w-full max-w-3xl">
       <CardHeader>
         <CardTitle class="text-2xl">Preços</CardTitle>
         <CardDescription>Preço e preço de promoção e de custo do produto</CardDescription>
       </CardHeader>
       <CardContent>
         <div class="grid w-full gap-6">
-          <div class="flex flex-row gap-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="flex flex-col gap-2 w-full">
-              <Label for="price" class="text-muted-foreground">
-                Preço de venda
-              </Label>
+              <Label for="price" class="text-muted-foreground">Preço de venda</Label>
               <div class="relative items-center">
                 <Input v-model="price" id="price" type="number" placeholder="0.00" class="pl-10 border-primary" :class="{ 'border-red-500': errors.price }" />
                 <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
@@ -213,9 +210,7 @@ const resetForm = () => {
               <p v-if="errors.price" class="text-sm text-red-500">{{ errors.price }}</p>
             </div>
             <div class="flex flex-col gap-2 w-full">
-              <Label for="promotional" class="text-muted-foreground">
-                Preço promocional
-              </Label>
+              <Label for="promotional" class="text-muted-foreground">Preço promocional</Label>
               <div class="relative items-center">
                 <Input v-model="promotional" id="promotional" type="number" placeholder="0.00" class="pl-10 border-primary" />
                 <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
@@ -224,11 +219,10 @@ const resetForm = () => {
               </div>
             </div>
           </div>
-          <div class="flex flex-row gap-4">
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="flex flex-col gap-2 w-full">
-              <Label for="cost" class="text-muted-foreground">
-                Custo
-              </Label>
+              <Label for="cost" class="text-muted-foreground">Custo</Label>
               <div class="relative items-center">
                 <Input v-model="cost" id="cost" type="number" placeholder="0.00" class="pl-10 border-primary" :class="{ 'border-red-500': errors.cost }" />
                 <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
@@ -237,11 +231,10 @@ const resetForm = () => {
               </div>
               <p v-if="errors.cost" class="text-sm text-red-500">{{ errors.cost }}</p>
             </div>
+
             <div class="flex flex-col gap-2 w-full">
               <div class="flex flex-row gap-1 m-0 p-0">
-                <Label for="margin" class="text-muted-foreground">
-                  Margin de lucro
-                </Label>
+                <Label for="margin" class="text-muted-foreground">Margem de lucro</Label>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger as-child>
@@ -253,18 +246,20 @@ const resetForm = () => {
                   </Tooltip>
                 </TooltipProvider>
               </div>
-
               <div class="items-center">
                 <Input disabled :value="`${margin}%`" id="margin" type="text" placeholder="0%" class="border-primary" />
               </div>
             </div>
           </div>
-          <Label for="description-client" class="text-muted-foreground">É para uso interno, os seus clientes não o verão
-            na loja.</Label>
+
+          <Label for="description-client" class="text-muted-foreground">
+            É para uso interno, os seus clientes não o verão na loja.
+          </Label>
         </div>
       </CardContent>
     </Card>
-    <Card class="w-[750px]">
+
+    <Card class="w-full max-w-3xl">
       <CardHeader>
         <CardTitle class="text-2xl">Estoque</CardTitle>
         <CardDescription>Estoque do produto</CardDescription>
@@ -279,7 +274,8 @@ const resetForm = () => {
         </div>
       </CardContent>
     </Card>
-    <Button class="w-[750px] cursor-pointer" :disabled="loading" @click="create">
+
+    <Button class="w-full max-w-3xl cursor-pointer" :disabled="loading" @click="create">
       <Loader2 v-if="loading" class="size-4 animate-spin" />
       Criar produto
     </Button>
