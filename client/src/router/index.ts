@@ -10,10 +10,11 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: MainLayout,
+    meta: { requiresAuth: true },
     children: [
       { path: '', component: HomeView },
       { path: 'about', component: AboutView },
-      { path: 'product/create', component: CreateProductView, meta: { requiresAuth: true } },
+      { path: 'product/create', component: CreateProductView},
     ],
   },
   {
