@@ -1,4 +1,4 @@
-package com.sb.config;
+package com.sb.core.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
