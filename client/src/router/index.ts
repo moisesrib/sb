@@ -28,7 +28,7 @@ export const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
   const user = localStorage.getItem('user');
   const token = JSON.parse(user || '{}').token;
   const isAuthenticated = !!token;

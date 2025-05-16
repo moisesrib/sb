@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import AppSidebar from '@/components/AppSidebar.vue';
-import Breadcrumb from '@/components/ui/breadcrumb/Breadcrumb.vue';
-import BreadcrumbItem from '@/components/ui/breadcrumb/BreadcrumbItem.vue';
-import BreadcrumbLink from '@/components/ui/breadcrumb/BreadcrumbLink.vue';
-import BreadcrumbList from '@/components/ui/breadcrumb/BreadcrumbList.vue';
-import BreadcrumbSeparator from '@/components/ui/breadcrumb/BreadcrumbSeparator.vue';
+// import Breadcrumb from '@/components/ui/breadcrumb/Breadcrumb.vue';
+// import BreadcrumbItem from '@/components/ui/breadcrumb/BreadcrumbItem.vue';
+// import BreadcrumbLink from '@/components/ui/breadcrumb/BreadcrumbLink.vue';
+// import BreadcrumbList from '@/components/ui/breadcrumb/BreadcrumbList.vue';
+// import BreadcrumbSeparator from '@/components/ui/breadcrumb/BreadcrumbSeparator.vue';
 import Separator from '@/components/ui/separator/Separator.vue';
 import SidebarInset from '@/components/ui/sidebar/SidebarInset.vue';
 import SidebarProvider from '@/components/ui/sidebar/SidebarProvider.vue';

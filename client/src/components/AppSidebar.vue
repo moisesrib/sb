@@ -2,7 +2,7 @@
 import type { SidebarProps } from '@/components/ui/sidebar'
 
 import NavMain from './NavMain.vue'
-import NavProjects from './NavProjects.vue'
+// import NavProjects from './NavProjects.vue'
 import NavUser from './NavUser.vue'
 import {
   Sidebar,
@@ -12,9 +12,6 @@ import {
 } from '@/components/ui/sidebar'
 
 import {
-  Frame,
-  Map,
-  PieChart,
   Settings2,
 } from 'lucide-vue-next'
 
