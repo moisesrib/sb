@@ -14,7 +14,7 @@ export interface CustomAxiosRequestConfig extends AxiosRequestConfig {
 }
 
 const api = axios.create({
-  baseURL: "/api",
+  baseURL: import.meta.env.VITE_BASE_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
