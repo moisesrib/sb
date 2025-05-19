@@ -2,14 +2,17 @@ package com.sb.product.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sb.core.exceptions.AlreadyExistsException;
+import com.sb.core.exceptions.NotFoundException;
 import com.sb.product.dto.CreateRequestDTO;
 import com.sb.product.model.Product;
 import com.sb.product.repository.ProductRepository;
+import com.sb.utils.BarcodeUtils;
 
 @Service
 public class ProductService {
@@ -31,10 +34,17 @@ public class ProductService {
         product.setCost(data.cost());
         product.setStock(data.stock());
         product.setActive(data.active());
+        String barcode = BarcodeUtils.generateEAN13Barcode();
+        product.setBarcode(barcode);
         return productRepository.save(product);
     }
 
     public List<Product> findAll() {
         return productRepository.findAll();
+    }
+
+    public Product findById(String barcode) {
+        return productRepository.findByBarcodeAndActiveTrueAndStockGreaterThan(barcode, 0)
+            .orElseThrow(() -> new NotFoundException("Produto não encontrado, inativo ou sem estoque"));
     }
 }

@@ -1,9 +1,9 @@
 package com.sb.user.dto;
 
-public record AuthResponseDTO(
+public record AuthManagerResponseDTO(
     String name, 
     String email, 
-    String token, 
+    String code,
     String role,
-    String code
+    String token
 ) {}

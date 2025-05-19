@@ -1,6 +1,5 @@
 package com.sb.core.exceptions;
 
-import java.security.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,92 +19,100 @@ import jakarta.servlet.http.HttpServletRequest;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponseDTO> handleValidationExceptions(
-            MethodArgumentNotValidException ex,
-            HttpServletRequest request) {
-        
-        List<ValidationErrorDTO> errors = new ArrayList<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.add(new ValidationErrorDTO(fieldName, errorMessage));
-        });
-        
-        ErrorResponseDTO errorResponse = new ErrorResponseDTO(
-                HttpStatus.BAD_REQUEST.value(),
-                "Validation Error",
-                "Erro de validação nos campos",
-                request.getRequestURI(),
-                LocalDateTime.now(),
-                errors
-        );
-        
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-    }
+        @ExceptionHandler(AccessDeniedException.class)
+        public ResponseEntity<ErrorResponseDTO> handleAccessDeniedException(
+                        AccessDeniedException ex, HttpServletRequest request) {
 
-    @ExceptionHandler(AlreadyExistsException.class)
-    public ResponseEntity<ErrorResponseDTO> handleAlreadyExists(
-            AlreadyExistsException ex,
-            HttpServletRequest request) {
+                var response = new ErrorResponseDTO(
+                                HttpStatus.FORBIDDEN.value(),
+                                "Acesso negado",
+                                ex.getMessage(),
+                                request.getRequestURI(),
+                                LocalDateTime.now());
 
-        ErrorResponseDTO error = new ErrorResponseDTO(
-                HttpStatus.BAD_REQUEST.value(),
-                "Bad Request",
-                ex.getMessage(),
-                request.getRequestURI(),
-                LocalDateTime.now()
-        );
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+        }
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
-    }
-    
+        @ExceptionHandler(MethodArgumentNotValidException.class)
+        public ResponseEntity<ErrorResponseDTO> handleValidationExceptions(
+                        MethodArgumentNotValidException ex,
+                        HttpServletRequest request) {
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ErrorResponseDTO> handleNotFoundException(
-            NotFoundException ex,
-            HttpServletRequest request) {
+                List<ValidationErrorDTO> errors = new ArrayList<>();
+                ex.getBindingResult().getAllErrors().forEach((error) -> {
+                        String fieldName = ((FieldError) error).getField();
+                        String errorMessage = error.getDefaultMessage();
+                        errors.add(new ValidationErrorDTO(fieldName, errorMessage));
+                });
 
-        ErrorResponseDTO error = new ErrorResponseDTO(
-                HttpStatus.NOT_FOUND.value(),
-                "Not Found",
-                ex.getMessage(),
-                request.getRequestURI(), 
-                LocalDateTime.now()
-        );
+                ErrorResponseDTO errorResponse = new ErrorResponseDTO(
+                                HttpStatus.BAD_REQUEST.value(),
+                                "Validation Error",
+                                "Erro de validação nos campos",
+                                request.getRequestURI(),
+                                LocalDateTime.now(),
+                                errors);
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
-    }
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
 
-    @ExceptionHandler(EmailAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponseDTO> handleEmailAlreadyExists(
-            EmailAlreadyExistsException ex,
-            HttpServletRequest request) {
+        @ExceptionHandler(AlreadyExistsException.class)
+        public ResponseEntity<ErrorResponseDTO> handleAlreadyExists(
+                        AlreadyExistsException ex,
+                        HttpServletRequest request) {
 
-        ErrorResponseDTO error = new ErrorResponseDTO(
-                HttpStatus.BAD_REQUEST.value(),
-                "Bad Request",
-                ex.getMessage(),
-                request.getRequestURI(), 
-                LocalDateTime.now()
-        );
+                ErrorResponseDTO error = new ErrorResponseDTO(
+                                HttpStatus.BAD_REQUEST.value(),
+                                "Bad Request",
+                                ex.getMessage(),
+                                request.getRequestURI(),
+                                LocalDateTime.now());
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
-    }
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponseDTO> handleGenericException(
-            Exception ex,
-            HttpServletRequest request) {
+        @ExceptionHandler(NotFoundException.class)
+        public ResponseEntity<ErrorResponseDTO> handleNotFoundException(
+                        NotFoundException ex,
+                        HttpServletRequest request) {
 
-        ErrorResponseDTO error = new ErrorResponseDTO(
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "Internal Server Error",
-                "Ocorreu um erro inesperado.",
-                request.getRequestURI(), 
-                LocalDateTime.now()
-        );
+                ErrorResponseDTO error = new ErrorResponseDTO(
+                                HttpStatus.NOT_FOUND.value(),
+                                "Not Found",
+                                ex.getMessage(),
+                                request.getRequestURI(),
+                                LocalDateTime.now());
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
-    }
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        }
+
+        @ExceptionHandler(EmailAlreadyExistsException.class)
+        public ResponseEntity<ErrorResponseDTO> handleEmailAlreadyExists(
+                        EmailAlreadyExistsException ex,
+                        HttpServletRequest request) {
+
+                ErrorResponseDTO error = new ErrorResponseDTO(
+                                HttpStatus.BAD_REQUEST.value(),
+                                "Bad Request",
+                                ex.getMessage(),
+                                request.getRequestURI(),
+                                LocalDateTime.now());
+
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        }
+
+        @ExceptionHandler(Exception.class)
+        public ResponseEntity<ErrorResponseDTO> handleGenericException(
+                        Exception ex,
+                        HttpServletRequest request) {
+
+                ErrorResponseDTO error = new ErrorResponseDTO(
+                                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                                "Internal Server Error",
+                                "Ocorreu um erro inesperado.",
+                                request.getRequestURI(),
+                                LocalDateTime.now());
+
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+        }
 }
