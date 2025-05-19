@@ -5,11 +5,20 @@ export interface ResponseAuthDto {
     name: string;
     email: string;
     token: string;
+    role: string;
 }
 
 export interface CustomAxiosRequestConfig extends AxiosRequestConfig {
     skipAuth?: boolean;
 }
+
+export interface ResponseAuthManagerDto {
+    id: string;
+    name: string;
+    email: string;
+    token: string;
+}
+
 
 
 

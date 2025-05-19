@@ -5,6 +5,8 @@ import ErrorView from '@/pages/ErrorView.vue';
 import HomeView from '@/pages/home/HomeView.vue';
 import LoginView from '@/pages/login/LoginView.vue';
 import CreateProductView from '@/pages/product/CreateProductView.vue';
+import ChosenView from '@/pages/chosen/ChosenView.vue';
+import SalesView from '@/pages/sales/SalesView.vue';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -20,6 +22,16 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/login',
     component: LoginView
+  },
+  {
+    path: '/chosen',
+    component: ChosenView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/sales',
+    component: SalesView,
+    meta: { requiresAuth: true },
   },
   { path: '/:catchAll(.*)*', component: ErrorView }
 ];

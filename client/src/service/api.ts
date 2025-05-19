@@ -47,7 +47,7 @@ api.interceptors.response.use(
   error => {
     let message = 'An unexpected error occurred. Please try again.';
     const toastOptions: ExternalToast = {
-      style: { background: 'red', color: '#fff' },
+      style: { background: '#F15B5B', color: '#fff' },
     };
 
     if (axios.isAxiosError(error)) {
@@ -58,9 +58,13 @@ api.interceptors.response.use(
       switch (error.response?.status) {
         case 403:
           message = 'Access denied. You do not have permission';
+          localStorage.removeItem('user');
+          router.push('/login');
           break;
         case 401:
           message = 'User not authorized';
+          localStorage.removeItem('user');
+          router.push('/login');
           break;
         case 400:
           if (error.response?.data?.violations?.[0]?.message) {
@@ -74,11 +78,6 @@ api.interceptors.response.use(
     }
 
     notify(message, toastOptions);
-
-    if (axios.isAxiosError(error) && error.response?.status === 401) {
-      localStorage.removeItem('user');
-      router.push('/login');
-    }
 
     if (error instanceof Error) {
       return Promise.reject(error);

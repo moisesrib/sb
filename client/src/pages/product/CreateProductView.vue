@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { BadgeDollarSign, BadgeInfo, Loader2 } from 'lucide-vue-next'
 import { ref, computed } from 'vue';
-import { createProduct } from '@/service/product/createProductService';
+import { createProduct } from '@/service/product/productService';
 import { z } from 'zod';
 import { toastError, toastInfo, toastSuccess } from '@/utils/toastUtils'
 

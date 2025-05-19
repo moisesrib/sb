@@ -2,12 +2,27 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import { z } from 'zod';
 import { toastError, toastInfo, toastSuccess } from '@/utils/toastUtils'
 import { EyeIcon, EyeOffIcon, Loader2 } from 'lucide-vue-next'
 import { login } from '@/service/account/auth/authService';
 import { router } from '@/router';
+
+const handleKeyPress = (event: KeyboardEvent) => {
+    console.log(event.key);
+    if (event.key === 'Enter') {
+        handleLogin();
+    }
+};
+
+onMounted(() => {
+    window.addEventListener('keydown', handleKeyPress);
+});
+
+onUnmounted(() => {
+    window.removeEventListener('keydown', handleKeyPress);
+});
 
 const loading = ref(false);
 const email = ref('');
@@ -72,11 +87,15 @@ const handleLogin = async () => {
 
         const user = response.data;
         localStorage.setItem('user', JSON.stringify(user));
-
-        router.push('/');      
+        
+        if(user.role === 'SELLER') {
+            router.push('/sales');
+        } else {
+            router.push('/chosen');
+        }
+           
         toastSuccess('Login realizado com sucesso');
     } catch (error) {
-        toastError('Falha ao realizar login');
         console.error('Erro ao fazer login:', error);
     } finally {
         loading.value = false;
@@ -134,7 +153,7 @@ const handleLogin = async () => {
                         </div>
                         <p v-if="errors.password" class="text-sm text-red-500">{{ errors.password }}</p>
                     </div>
-                    <Button type="submit" class="w-full cursor-pointer" :disabled="loading" @click="handleLogin">
+                    <Button type="submit" class="w-full cursor-pointer" :disabled="loading" @click="handleLogin" @keyup.enter="handleLogin">
                         <Loader2 v-if="loading" class="size-4 animate-spin" />
                         Login
                     </Button>
