@@ -21,9 +21,10 @@ WHERE NOT EXISTS (SELECT 1 FROM roles WHERE name = 'USER');
 
 
 -- Criar usuário admin com role ADMIN diretamente
-INSERT INTO users (id, name, email, password, active, role_id)
+INSERT INTO users (id, code, name, email, password, active, role_id)
 SELECT 
     gen_random_uuid(), 
+    '1234567890123',
     'Administrador', 
     'admin@semprebella.com',
     '$2a$10$c68am.JZ3nfWEyPSvHEi5.JjcA1iQStDLb/mBEafB2n.B9x6DjFwi', -- senha: admin123

@@ -1,9 +1,11 @@
 package com.sb.user.model;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import com.sb.core.structures.BaseEntity;
 import com.sb.user.enums.RoleEnum;
 
 import jakarta.persistence.Column;
@@ -26,7 +28,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role {
+public class Role extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -39,4 +41,15 @@ public class Role {
     
     @OneToMany(mappedBy = "role")
     private Set<User> users = new HashSet<>();
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+
+    public boolean isDeleted() {
+        return this.deletedAt != null;
+    }
+
+    public Role(RoleEnum name) {
+        this.name = name;
+    }
 }

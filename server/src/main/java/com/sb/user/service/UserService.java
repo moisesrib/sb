@@ -51,7 +51,7 @@ public class UserService {
         newUser.setName(data.name());
         newUser.setEmail(data.email());
         newUser.setPassword(this.passwordEncoder.encode(data.password()));
-        newUser.setCode(BarcodeUtils.generateEAN13Barcode());
+        newUser.setCode(BarcodeUtils.generateCode128Barcode());
         newUser.setActive(true);
         
         // Role userRole = roleRepository.findByName("USER")

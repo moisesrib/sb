@@ -1,16 +1,19 @@
 package com.sb.utils;
 
-import java.util.UUID;
+import java.security.SecureRandom;
 
 public class BarcodeUtils {
-    public static String generateEAN13Barcode() {
-        String base12Digits = UUID.randomUUID().toString().substring(0, 12).toUpperCase();
-        int sum = 0;
-        for (int i = 0; i < base12Digits.length(); i++) {
-            int digit = Character.getNumericValue(base12Digits.charAt(i));
-            sum += (i % 2 == 0) ? digit : digit * 3;
+    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    private static final int LENGTH = 12;
+    private static final SecureRandom RANDOM = new SecureRandom();
+
+    public static String generateCode128Barcode() {
+        StringBuilder barcode = new StringBuilder();
+        for (int i = 0; i < LENGTH; i++) {
+            int index = RANDOM.nextInt(CHARACTERS.length());
+            barcode.append(CHARACTERS.charAt(index));
         }
-        int checkDigit = (10 - (sum % 10)) % 10;
-        return base12Digits + checkDigit;
+        return barcode.toString();
     }
+
 }

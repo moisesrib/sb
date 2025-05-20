@@ -1,7 +1,6 @@
 package com.sb.product.controller;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sb.infra.security.role.Authentication;
 import com.sb.product.dto.CreateRequestDTO;
+import com.sb.product.dto.ProductReponseDTO;
 import com.sb.product.model.Product;
 import com.sb.product.service.ProductService;
 import com.sb.user.enums.RoleEnum;
@@ -31,23 +31,24 @@ public class ProductController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Product> create(@RequestBody @Valid CreateRequestDTO data) {
-        Product product = productService.create(data);
+    @Authentication(role = RoleEnum.MANAGER)
+    public ResponseEntity<ProductReponseDTO> create(@RequestBody @Valid CreateRequestDTO data) {
+        ProductReponseDTO product = productService.create(data);
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 
     @GetMapping
     @Transactional
-    public ResponseEntity<List<Product>> findAll() {
-        List<Product> products = productService.findAll();
+    public ResponseEntity<List<ProductReponseDTO>> findAll() {
+        List<ProductReponseDTO> products = productService.findAll();
         return ResponseEntity.ok(products);
     }
 
     @GetMapping("barcode/{barcode}")
     @Transactional
     @Authentication(role = RoleEnum.SELLER)
-    public ResponseEntity<Product> findById(@PathVariable("barcode") String barcode) {
-        Product product = productService.findById(barcode);
+    public ResponseEntity<ProductReponseDTO> findById(@PathVariable("barcode") String barcode) {
+        ProductReponseDTO product = productService.findById(barcode);
         return ResponseEntity.ok(product);
     }
 }
