@@ -3,6 +3,8 @@ package com.sb.sales.dto;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import com.sb.product.enums.ProductStatusEnum;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,5 +23,5 @@ public class SalesItemRequestDTO {
     private BigDecimal unitPrice;
 
     @NotNull(message = "Status é obrigatório")
-    private String status;
+    private ProductStatusEnum status;
 }

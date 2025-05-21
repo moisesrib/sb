@@ -9,6 +9,7 @@ import com.sb.sales.enums.SalesStatusEnum;
 import com.sb.user.model.User;
 import com.sb.core.structures.BaseEntity;
 import com.sb.customer.model.Customer;
+import com.sb.sales.enums.PaymentMethodEnum;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -48,7 +49,9 @@ public class Sales extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private SalesStatusEnum status;
 
-    private String paymentMethod;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_method", nullable = false)
+    private PaymentMethodEnum paymentMethod;
 
     private String observation;
 

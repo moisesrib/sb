@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.sb.customer.model.Customer;
+import com.sb.customer.dto.CustomerBasicDTO;
 import com.sb.sales.model.Sales;
 
 public record ResponseSalesDTO(
@@ -17,7 +17,7 @@ public record ResponseSalesDTO(
         String paymentMethod,
         String observation,
         String status,
-        Customer customer,
+        CustomerBasicDTO customer,
         List<ResponseSalesItemDTO> items
 ) {
     public ResponseSalesDTO(Sales sale) {
@@ -26,10 +26,10 @@ public record ResponseSalesDTO(
             sale.getTotal(),
             sale.getDate(),
             sale.getDiscount(),
-            sale.getPaymentMethod(),
+            sale.getPaymentMethod().getDescription(),
             sale.getObservation(),
             sale.getStatus().toString(),
-            sale.getCustomer(),
+            new CustomerBasicDTO(sale.getCustomer()),
             sale.getItems().stream()
                 .map(ResponseSalesItemDTO::new)
                 .collect(Collectors.toList())

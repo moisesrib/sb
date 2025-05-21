@@ -3,12 +3,12 @@ package com.sb.sales.dto;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import com.sb.product.model.Product;
+import com.sb.product.dto.ProductBasicDTO;
 import com.sb.sales.model.SalesItem;
 
 public record ResponseSalesItemDTO(
         UUID id,
-        Product product,
+        ProductBasicDTO product,
         Integer quantity,
         BigDecimal unitPrice,
         BigDecimal subtotal,
@@ -17,7 +17,7 @@ public record ResponseSalesItemDTO(
     public ResponseSalesItemDTO(SalesItem item) {
         this(
             item.getId(),
-            item.getProduct(),
+            new ProductBasicDTO(item.getProduct()),
             item.getQuantity(),
             item.getUnitPrice(),
             item.getSubtotal(),

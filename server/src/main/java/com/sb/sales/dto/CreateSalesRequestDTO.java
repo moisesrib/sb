@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
+import com.sb.sales.enums.PaymentMethodEnum;
+
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -16,13 +18,11 @@ public class CreateSalesRequestDTO {
     @NotNull(message = "Cliente é obrigatório")
     private UUID customerId;
 
-    @NotNull(message = "Desconto é obrigatório")
     private BigDecimal discount;
 
-    @NotEmpty(message = "Método de pagamento é obrigatório")
-    private String paymentMethod;
+    @NotNull(message = "Método de pagamento é obrigatório")
+    private PaymentMethodEnum paymentMethod;
 
-    @NotEmpty(message = "Observação é obrigatória")
     private String observation;
 
     @NotEmpty(message = "Status é obrigatório")

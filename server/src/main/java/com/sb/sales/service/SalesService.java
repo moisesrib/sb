@@ -56,7 +56,7 @@ public class SalesService {
         sale.setDiscount(dto.getDiscount());
         sale.setObservation(dto.getObservation());
         sale.setPaymentMethod(dto.getPaymentMethod());
-        sale.setStatus(SalesStatusEnum.valueOf(dto.getStatus()));
+        sale.setStatus(SalesStatusEnum.PENDING);
         sale.setDeletedAt(null);
 
         Set<SalesItem> items = new HashSet<>();
@@ -64,13 +64,13 @@ public class SalesService {
 
         for (SalesItemRequestDTO itemDTO : dto.getItems()) {
             Product product = productRepository.findById(itemDTO.getProductId())
-                    .orElseThrow(() -> new NotFoundException("Produto não encontrado: " + itemDTO.getProductId()));
+                    .orElseThrow(() -> new NotFoundException("Produto não encontrado"));
 
             SalesItem item = new SalesItem();
             item.setProduct(product);
             item.setQuantity(itemDTO.getQuantity());
             item.setUnitPrice(itemDTO.getUnitPrice());
-            item.setStatus(SalesStatusEnum.valueOf(itemDTO.getStatus()));
+            item.setStatus(SalesStatusEnum.PENDING);
             item.setSale(sale);
             item.setDeletedAt(null);
             item.calculateSubtotal();
@@ -83,8 +83,7 @@ public class SalesService {
         sale.setTotal(total.subtract(dto.getDiscount() != null ? dto.getDiscount() : BigDecimal.ZERO));
         sale.setItems(items);
 
-        salesRepository.save(sale);
-
-        return new ResponseSalesDTO(sale);
+        Sales savedSale = salesRepository.save(sale);
+        return new ResponseSalesDTO(savedSale);
     }
 }
